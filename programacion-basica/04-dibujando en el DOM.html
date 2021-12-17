@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Dibujo en canvas</h1>
+    <p>
+      Cuantas lineas quieres
+      <input type="text" id="texto_lineas" />
+      <input type="button" value="A darle!" id="botoncito" />
+    </p>
+    <canvas width="300" height="300" id="dibujito"></canvas> <!-- agregamos el tamaño que usaremos el canva-->
+
+    <p>Asi queda tu dibujo</p>
+
+    <script type="text/javascript">
+
+var texto = document.getElementById("texto_lineas"); //toma el objeto del numero ingresado del id texto_lineas y lo guarda en la variable
+var boton = document.getElementById("botoncito"); //toma el boton y lo guarda con en la varaible boton
+
+boton.addEventListener("click", dibujoPorClick ); //escucha el evento del objeto boton e invoca la funcion dibujoPorlClick mas debajo
+
+var d = document.getElementById("dibujito"); //guarda en una variable el id de dibujito y lo guarda en un objeto 
+var ancho = d.width; //toma el tamaño del width del objeto del id d
+var lienzo = d.getContext("2d");
+
+//funcion  para dibujar linea
+function dibujarLinea(color, xinicial, yinicial, xfinal, yfinal)
+{
+  lienzo.beginPath(); // empieza el camino
+  lienzo.strokeStyle = color; //cambia el color del trazo por la varialbe color iniciado
+  lienzo.moveTo(xinicial, yinicial); //mueve desde el punto x al punto y inicial
+  lienzo.lineTo(xfinal, yfinal); // nueve desde el punto x final al y final
+  lienzo.stroke(); //toma el objeto lienzo y lo muevo
+  lienzo.closePath(); //toma el objeto lienzo y cierra el camino
+}
+
+
+
+function dibujoPorClick()
+{
+  var lineas = parseInt(texto.value); //tranformamos en entero el valor ingresado en texto_lineas
+  var l = 0; //iniciamos el l en cero
+  var yi, xf; //inciamos yi e xxf
+  var colorcito = "#FAA"; //cargamos la variable en hexa como "colorcito"
+  var espacio = ancho / lineas; //calculamos el espacio que es dividio el ancho con las lineas 
+
+  for(l = 0; l < lineas; l++) //le ponemos un bucle de l empezando en 0 hasta la cantidad de lineas
+  {
+    yi = espacio * l;
+    xf = espacio * (l + 1);
+    dibujarLinea(colorcito, 0, yi, xf, 300); //llama a la funcion de dibujar linea y le pasa, color, espacio y tamaño
+    console.log("Linea " + l); //nos muestra por consola la linea
+  }
+
+  dibujarLinea(colorcito, 1,1,1,299);
+  dibujarLinea(colorcito, 1,299,299,299);
+}
+
+
+
+        </script>
+</body>
+</html>
